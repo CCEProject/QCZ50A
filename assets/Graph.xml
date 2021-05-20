@@ -106,13 +106,13 @@
 
       <!-- Mechanical Pencil -->
       <choice>
-         <genericValue>1</genericValue>
+         <genericValue>99</genericValue>
          <cost>1.5</cost>
       </choice>
 
       <!-- Pencil -->
       <choice>
-         <genericValue>99</genericValue>
+         <genericValue>1</genericValue>
          <cost>.8</cost>
       </choice>
 

@@ -200,6 +200,7 @@ class HomePage extends Phaser.Scene {
 
     // special case for summary
     if (currScenario.clipName == "Summary") {
+      ownerScene.BGMusic.stop();
       ownerScene.scene.restart();
       return;
     }
