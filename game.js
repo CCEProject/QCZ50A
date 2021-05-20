@@ -73,6 +73,8 @@ class HomePage extends Phaser.Scene {
     this.load.image('AddHappy', 'assets/AddHappy.png');
     this.load.image('MinusHappy', 'assets/MinusHappy.png');
 
+    this.load.image('EndGameBtn', 'assets/EndGameBtn.png');
+
     this.load.spritesheet('ChoiceBtn', 'assets/ChoiceBtn.png', { frameWidth: 100, frameHeight: 108 });
     this.load.spritesheet('CfmBtn', 'assets/ConfirmBtn.png', { frameWidth: 202, frameHeight: 89 });
     this.load.spritesheet('StartBtn', 'assets/StartBtn.png', { frameWidth: 202, frameHeight: 89 });
@@ -126,6 +128,11 @@ class HomePage extends Phaser.Scene {
 
     this.cfmBtn = this.createBtn(0.89, 0.9, 1.34, "CfmBtn", this.OnCfmBtnPressed);
     this.cfmBtn.setVisible(false);
+
+    this.EndGameBtn = this.add.image(0, 0, 'EndGameBtn');
+    this.EndGameBtn.setVisible(false);
+    this.setScreenPos(this.EndGameBtn, 0.885, 0.9);
+    this.EndGameBtn.setScale(1.345);
 
     this.currScenarioID = 0;
 
@@ -198,12 +205,14 @@ class HomePage extends Phaser.Scene {
 
     ownerScene.cfmBtn.disableInteractive();
 
-    // special case for summary
-    if (currScenario.clipName == "Summary") {
-      ownerScene.BGMusic.stop();
-      ownerScene.scene.restart();
-      return;
-    }
+    // // special case for summary
+    // if (currScenario.clipName == "Summary") {
+    //   ownerScene.BGMusic.stop();
+    //   ownerScene.registry.destroy(); // destroy registry
+    //   ownerScene.events.off();
+    //   ownerScene.scene.restart();
+    //   return;
+    // }
 
     // select 1 committal type
     if (currScenario.exclusiveSelection == 1) {
@@ -350,6 +359,9 @@ class HomePage extends Phaser.Scene {
 
     if (currScenario.clipName == "Summary") {
       this.ShowSummary(clipDuration);
+      this.cfmBtn.setVisible(false);
+      this.startGameBtn.setVisible(false);
+      this.EndGameBtn.setVisible(true);
     }
 
     this.setScreenPos(videoClip, 0.5, 0.5);
@@ -357,8 +369,10 @@ class HomePage extends Phaser.Scene {
     videoClip.play(false, 0.0, clipDuration - 0.1);
     videoClip.on('complete', function (video) {
       videoClip.seekTo(1.0);
-      this.scene.RefreshCfmBtnState();
+      //this.scene.RefreshCfmBtnState();
     });
+
+    this.time.delayedCall(clipDuration * 1000 * 0.85, function() {this.RefreshCfmBtnState();}, [], this);
 
     this.updateHappyScore(currScenario.happy);
     this.updateMoneyScore(currScenario.money);
