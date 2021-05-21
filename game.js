@@ -369,14 +369,9 @@ class HomePage extends Phaser.Scene {
 
     this.setScreenPos(videoClip, 0.5, 0.5);
     videoClip.depth = -10;
-    
-    videoClip.play(false, 0.0, clipDuration);
-
-    //videoClip.changeSource(currScenario.clipName);
-
+    videoClip.play(false, 0.0, clipDuration - 0.1);
     videoClip.on('complete', function (video) {
-      
-      //videoClip.seekTo(1.0);
+      videoClip.seekTo(1.0);
       //this.scene.RefreshCfmBtnState();
     });
 
