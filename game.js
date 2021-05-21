@@ -377,10 +377,10 @@ class HomePage extends Phaser.Scene {
     videoClip.on('complete', function (video) {
       
       //videoClip.seekTo(1.0);
-      this.scene.RefreshCfmBtnState();
+      //this.scene.RefreshCfmBtnState();
     });
 
-    //this.time.delayedCall(clipDuration * 1000 * 0.85, function() {this.RefreshCfmBtnState();}, [], this);
+    this.time.delayedCall(clipDuration * 1000 * 0.85, function() {this.RefreshCfmBtnState();}, [], this);
 
     this.updateHappyScore(currScenario.happy);
     this.updateMoneyScore(currScenario.money);
