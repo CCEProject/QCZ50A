@@ -9,6 +9,8 @@ var scenariosTable = [];
 // clear at every scenarios and caches the choices 
 var selectedChoices = [];
 
+var currPlayingClip;
+
 // ////////////////
 // // LOADING 
 // ////////////////
@@ -355,10 +357,15 @@ class HomePage extends Phaser.Scene {
   // On load complete, really going to the next scenario
   /////////////////////////////////////
   OnLoadedGoToNextScenario(currScenario) {
-    let videoClip = this.add.video(0, 0, currScenario.clipName);
-    videoClip.video.autoplay = true;
-    
-    let clipDuration = videoClip.getDuration();
+
+    if(this.currPlayingClip){
+    this.currPlayingClip.stop();
+    }
+
+    this.currPlayingClip = this.add.video(0, 0, currScenario.clipName);
+    this.currPlayingClip.video.autoplay = true;
+
+    let clipDuration = this.currPlayingClip.getDuration();
 
     if (currScenario.clipName == "Summary") {
       this.ShowSummary(clipDuration);
@@ -367,18 +374,19 @@ class HomePage extends Phaser.Scene {
       this.EndGameBtn.setVisible(true);
     }
 
-    this.setScreenPos(videoClip, 0.5, 0.5);
-    videoClip.depth = -10;
+    this.setScreenPos(this.currPlayingClip, 0.5, 0.5);
+    this.currPlayingClip.depth = -10;
     
-    videoClip.play(false, 0.0, clipDuration - 0.1);
+    this.currPlayingClip.play(false, 0.0, clipDuration);
     //videoClip.changeSource(currScenario.clipName);
 
-    videoClip.on('complete', function (video) {
-      videoClip.seekTo(1.0);
-      //this.scene.RefreshCfmBtnState();
+    this.currPlayingClip.on('complete', function (video) {
+      this.scene.currPlayingClip.stop();
+      //videoClip.seekTo(1.0);
+      this.scene.RefreshCfmBtnState();
     });
 
-    this.time.delayedCall(clipDuration * 1000 * 0.85, function() {this.RefreshCfmBtnState();}, [], this);
+    //this.time.delayedCall(clipDuration * 1000 * 0.85, function() {this.RefreshCfmBtnState();}, [], this);
 
     this.updateHappyScore(currScenario.happy);
     this.updateMoneyScore(currScenario.money);
