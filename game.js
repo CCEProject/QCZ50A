@@ -356,6 +356,8 @@ class HomePage extends Phaser.Scene {
   /////////////////////////////////////
   OnLoadedGoToNextScenario(currScenario) {
     let videoClip = this.add.video(0, 0, currScenario.clipName);
+    videoClip.video.autoplay = true;
+    
     let clipDuration = videoClip.getDuration();
 
     if (currScenario.clipName == "Summary") {
