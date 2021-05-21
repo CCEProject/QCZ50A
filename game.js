@@ -343,7 +343,8 @@ class HomePage extends Phaser.Scene {
     }
 
     // load dynamically
-    this.load.video(currScenario.clipName, "assets/" + currScenario.clipName + ".mp4");
+    this.load.video(currScenario.clipName, "assets/" + currScenario.clipName + ".mp4", 'loadeddata', false, false);
+
     this.load.once(Phaser.Loader.Events.COMPLETE, () => {
       this.OnLoadedGoToNextScenario(currScenario);
     })
