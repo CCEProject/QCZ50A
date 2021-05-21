@@ -343,7 +343,7 @@ class HomePage extends Phaser.Scene {
     }
 
     // load dynamically
-    this.load.video(currScenario.clipName, "assets/" + currScenario.clipName + ".mp4", 'loadeddata', false, false);
+    this.load.video(currScenario.clipName, "assets/" + currScenario.clipName + ".mp4", 'loadeddata', false, true);
 
     this.load.once(Phaser.Loader.Events.COMPLETE, () => {
       this.OnLoadedGoToNextScenario(currScenario);
@@ -368,8 +368,8 @@ class HomePage extends Phaser.Scene {
     this.setScreenPos(videoClip, 0.5, 0.5);
     videoClip.depth = -10;
     
-    //videoClip.play(false, 0.0, clipDuration - 0.1);
-    videoClip.changeSource(currScenario.clipName);
+    videoClip.play(false, 0.0, clipDuration - 0.1);
+    //videoClip.changeSource(currScenario.clipName);
 
     videoClip.on('complete', function (video) {
       videoClip.seekTo(1.0);
